@@ -1,0 +1,51 @@
+TEMA 1 - POO - RAZVAN RADOI - 321CA
+
+1. Mod de organizare:
+tema este structurata in 6 fisiere:
+- main -> implementeaza citirea datelor de intrare, mecanismul de joc si
+generarea outputului
+- hero -> implementeaza trasaturile generale ale unui erou din joc (hp, xp,
+level etc) precum si metode necesare oricarui erou cum ar fi cea a mecanismului
+de level up si meotdele de aplicare a unui damage (activ sau pasiv)
+- wizard, pyromancer, rogue si knight -> implementeaza trasaturile specifice
+fiecarui erou, mai exact implementeaza tipul de atac pe care un erou il are
+in functie de clasa acestuia. aceste trei clase extind clasa hero.
+
+2. Mecanismul jocului:
+am ales din motive de convenienta ca pozitia pe harta a unui jucator sa fie
+un atribut al jucatorului, nu ca jucatori "sa se afle in harta"
+in fiecare runda:
+    - mut jucatorii care mai sunt inca in viata
+    - aplic passive damage jucatorilor care mai sunt inca in viata si care
+      trebuie sa primeasca acest damage ( cat damage primeste pasiv un jucator
+      si pentru cate runde este tinut ca parametru al acelui jucator)
+    - parcurg de doua ori jucatorii si verific daca acestia se afla
+      in acelasi loc pe harta. daca da, atunci jucatorii se ataca simultan
+      cu toate abilitatile lor. daca un jucator isi omoara adversarul, acesta
+      primeste puncte de experienta
+      obs: rogue este facut sa atace intodeauna primul pentru a respecta
+      regula loviturilor critice (critical hit la fiecare 3 runde, daca e
+      pe teren woods).
+la finalul numarului de runde, generez outputul cerut pentru fiecare jucator
+si il pun in fisierul de output
+
+3. Mentiuni asupra modului de generare a atacului:
+Fiecare erou isi calculeaza singur, inainte de a ataca, in functie de eroul
+pe care il ataca, magnitudinea atacului sau. Metodele de atac primesc un Hero
+ca parametru, acesta fiind oponentul celui care isi calculeaza atacul.
+In functie de parametrii acestuia, atacatorul isi calculeaza COMPLET independent
+atacul. Acest lucru face ca metoda de atac a lui wizard sa fie ceva mai mare,
+intrucat el calculeaza ce atac va primi (pentru deflect) in functie de atacator.
+Am ales totusi sa nu modularizez mai mult codul in acest caz din doua motive:
+1. Pentru a uniformiza codul (celelalte 3 clase de eroi au cate o simpla meotda
+de atac, deci si wizard ar fi putut avea la fel)
+2. Conform checkerului de coding style, metoda de atac a lui wizard este
+suficient de mica (<150 de linii de cod)
+
+Dupa calculul puterii atacului, pasiv si activ, metodele de atac din clasele
+pyromancer, wizar, knight si rogue aplica metode din clasa hero pentru a ataca
+adversarul:
+    - get active damage: da damage activ(cel din runda curenta) adversarului
+    - set passive damage: seteaza damage-ul pasiv pentru un nr de runde
+4. Bonus
+NU am implementat bonus-ul.
